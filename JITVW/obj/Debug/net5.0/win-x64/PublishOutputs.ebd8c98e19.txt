@@ -1,0 +1,3 @@
+C:\Users\mtoledo\Documents\IRTSQL\JITVW.pdb
+C:\Users\mtoledo\Documents\IRTSQL\sni.dll
+C:\Users\mtoledo\Documents\IRTSQL\JITVW.exe
