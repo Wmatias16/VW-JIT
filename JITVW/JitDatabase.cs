@@ -17,14 +17,15 @@ namespace JITVW
                 SqlConnection conexion = new SqlConnection();
                 conexion.ConnectionString = ConfigurationManager.AppSettings[0];
 
-                string query = "INSERT INTO JIT VALUES(@Pkn, @Fecha,@Secuencia,@Modelo,@NumeroSerie)";
+                string query = "INSERT INTO JIT VALUES(@Fecha,@Pkn,@Secuencia,@Modelo,@NumeroSerie)";
                 foreach (Jit vwJit in vw)
                 {
                     using (SqlCommand command = new SqlCommand(query, conexion))
                     {
                        
-                        command.Parameters.AddWithValue("@Pkn", vwJit.Pkn);
+                        
                         command.Parameters.AddWithValue("@Fecha", vwJit.Fecha);
+                        command.Parameters.AddWithValue("@Pkn", vwJit.Pkn);
                         command.Parameters.AddWithValue("@Secuencia", vwJit.Secuencia);
                         command.Parameters.AddWithValue("@Modelo", vwJit.Modelo);
                         command.Parameters.AddWithValue("@NumeroSerie", vwJit.NumeroSerie);

@@ -7,46 +7,51 @@ namespace JITVW
 {
     class Program
     {
-       
+
         static void Main(string[] args)
         {
             Ejecutar();
         }
-        
-          private static List<Jit> ReadTXT()
-          {
-              string[] lines = System.IO.File.ReadAllLines(ConfigurationManager.AppSettings[1]);
 
-              List<string> datas = new List<string>();
+        private static List<Jit> ReadTXT()
+        {
+            string[] lines = System.IO.File.ReadAllLines(ConfigurationManager.AppSettings[1]);
+            string modeloTecho = ConfigurationManager.AppSettings[3];
+            List<string> datas = new List<string>();
 
-              List<Jit> listVw = new List<Jit>();
+            List<Jit> listVw = new List<Jit>();
 
-              foreach (string line in lines)
-              {
-                  datas.Add(line.Replace(" ", String.Empty));
-              }
+            foreach (string line in lines)
+            {
 
-              foreach (string data in datas)
-              {
+                Console.WriteLine();
 
-                  if (data.Length == 42)
-                  {
-                      Jit vw = new Jit();
+                if (line.Substring(27, 18).Substring(0, 3) == modeloTecho)
+                {
+                    datas.Add(line);
+                }
 
-                      vw.Fecha = data.Substring(1, 9);
-                      vw.Secuencia = int.Parse(data.Substring(10, 3));
-                      vw.Pkn = int.Parse(data.Substring(13, 10));
-                      vw.Modelo = data.Substring(23, 13);
-                      vw.NumeroSerie = int.Parse(data.Substring(36, 6));
+            }
 
-                      listVw.Add(vw);
-                  }
+            foreach (string data in datas)
+            {
+                Jit vw = new Jit();
+                DateTime fecha = Convert.ToDateTime(data.Substring(1, 9));
+                vw.Fecha = fecha.ToString("yyyy-MM-dd");
+                vw.Secuencia = int.Parse(data.Substring(11, 3));
+                vw.Pkn = int.Parse(data.Substring(14, 10));
+                vw.Modelo = data.Substring(27, 18);
+                vw.NumeroSerie = data.Substring(45, 6);
+                listVw.Add(vw);
+                Console.WriteLine(data);
+            }
 
-              }
+            return listVw;
+        }
 
-              return listVw;
-
-          }
+             
+            
+          
           private static void replacePath(string oldName)
           {
               DateTime fechaHoy = DateTime.Now;
